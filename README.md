@@ -1,12 +1,13 @@
 # ThingSet Dashboard
-A web app to plot measurement data using influxdb, dash and plotly. This app listens to a serial port, stores incoming measurement data in a local influxdb and displays the data on http://localhost:8050.
+This application is an interface and visualization tool for the libreSolar box. It listens on a given serial interface for incoming data using the ThingSet protocol and stores the data in a local sqlite database. A web app provides an interface to view measurement data and change settings on the microcontrollers of the box.
 
-## Send raw data from file to pseudo serial
-For testing purposes: If measurement data only are available in a text file, open up two interconnected pseudo terminals
+ThingSet publication messages are valid JSON maps with a `#` prefix as indicator, like the following simple example:
 ```
-socat -d -d pty,raw,echo=0 pty,raw,echo=0
+# {"vBat": 15.2, "tAmbient": 22}
 ```
-Send data to first pseudo terminal with
-```
-python emuserial <port>
-```
+There is also a more compact binary version (CBOR format) which shall be supportet in a later step.
+
+# Current Status
+Line plots from sqlite database working
+
+![Example figure of ThingSet Dashboard](test/example.png)
