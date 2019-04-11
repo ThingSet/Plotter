@@ -7,7 +7,26 @@ ThingSet publication messages are valid JSON maps with a `#` prefix as indicator
 ```
 There is also a more compact binary version (CBOR format) which shall be supportet in a later step.
 
+# Usage
+
+Install Python and necessary libraries:
+
+    pip install -r requirements.txt
+
+Collect data:
+
+    python sqlite_worker.py path/to/database.db
+
+Show and analyze collected data:
+
+    python app.py path/to/database.db
+
+Convert collected data to CSV file:
+
+    sqlite3 -header -csv path/to/database.db "SELECT * FROM ThingSet;" > path/to/database.csv
+
 # Current Status
+
 Line plots from sqlite database working
 
 ![Example figure of ThingSet Dashboard](test/example.png)
