@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+import argparse
 import sqlite3
 import pandas as pd
 import dash
@@ -9,8 +11,13 @@ import dash_daq as daq
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-con = sqlite3.connect("data/solarbox.db")
-df = pd.read_sql_query("SELECT * from Solarbox;", con)
+parser = argparse.ArgumentParser()
+parser.add_argument("db", help="Path to SQLite database file.")
+parser.add_argument("--table", help="Name of the table in the database (default: ThingSet)", default="ThingSet")
+args = parser.parse_args()
+
+con = sqlite3.connect(args.db)
+df = pd.read_sql_query("SELECT * from " + args.table + ";", con)
 meas = list(df.columns.values)
 meas.remove('index')
 opt = [dict(label=item, value=item) for item in meas]
@@ -64,7 +71,7 @@ def update_graph(selected_dropdown_value):
         pass
     else:
         return {
-            'data': [{ 
+            'data': [{
                 'x': df.index,
                 'y': df[value],
                 'line': {
