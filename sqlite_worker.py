@@ -10,6 +10,7 @@ import json
 from datetime import datetime
 import serial
 from pandas.io.json import json_normalize
+import time
 
 def out(msg):
     """Print message on command line."""
@@ -41,6 +42,7 @@ def write_data(ser, dbcon, table):
                     out("{}: data written to db.".format(data_frame.loc[0]['time']))
             except json.decoder.JSONDecodeError as e:
                 pass
+        time.sleep(0.1)
 
 def main():
     """This is the main function. Calls connect_serial(port, baud) and write_data(ser, dbcon, table)"""
